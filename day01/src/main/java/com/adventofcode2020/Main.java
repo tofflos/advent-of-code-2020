@@ -12,11 +12,11 @@ public class Main {
                 .mapToInt(Integer::parseInt)
                 .toArray();
 
-        System.out.println("Day 1a: " + day1(expenses));
-        System.out.println("Day 1b: " + day2(expenses));
+        System.out.println("Day 1a: " + day1a(expenses));
+        System.out.println("Day 1b: " + day1b(expenses));
     }
 
-    static int day1(int[] expenses) {
+    static int day1a(int[] expenses) {
         for (int i = 0; i < expenses.length; i++) {
             for (int j = 0; j < expenses.length; j++) {
                 if (expenses[i] + expenses[j] == 2020) {
@@ -28,7 +28,7 @@ public class Main {
         throw new IllegalArgumentException();
     }
 
-    static int day2(int[] expenses) {
+    static int day1b(int[] expenses) {
         for (int i = 0; i < expenses.length; i++) {
             for (int j = 0; j < expenses.length; j++) {
                 for (int k = 0; k < expenses.length; k++) {
