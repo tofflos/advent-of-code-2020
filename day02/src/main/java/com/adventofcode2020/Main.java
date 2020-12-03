@@ -20,21 +20,9 @@ public class Main {
     
 }
 
-class Password {
+record Password(int min, int max, char character, String value) {
 
     static Pattern pattern = Pattern.compile("(\\d+)-(\\d+)\\s(.):\\s(.+)");
-
-    int min;
-    int max;
-    char character;
-    String value;
-
-    private Password(int min, int max, char character, String value) {
-        this.min = min;
-        this.max = max;
-        this.character = character;
-        this.value = value;
-    }
 
     static Password fromString(String s) {
         var matcher = pattern.matcher(s);
