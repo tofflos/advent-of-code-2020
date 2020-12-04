@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -40,11 +39,11 @@ public class Main {
 
     static boolean validate2(Map<String, String> passport) {
         Map<String, Predicate<String>> validators = Map.of(
-                "byr", s -> validateYear(s, 1920, 2002),
-                "iyr", s -> validateYear(s, 2010, 2020),
-                "eyr", s -> validateYear(s, 2020, 2030),
-                "hgt", Main::validateHgt,
-                "hcl", s -> s.matches("#[a-z0-9]{6}"),
+                "byr", s -> s.matches("19[2-9][0-9]|200[0-2]"),
+                "iyr", s -> s.matches("201[0-9]|2020"),
+                "eyr", s -> s.matches("202[0-9]|2030"),
+                "hgt", s -> s.matches("(1([5-8][0-9]|9[0-3])cm)|((59|[6][0-9]|7[0-6])in)"),
+                "hcl", s -> s.matches("#[0-9a-f]{6}"),
                 "ecl", s -> s.matches("amb|blu|brn|gry|grn|hzl|oth"),
                 "pid", s -> s.matches("\\d{9}"),
                 "cid", s -> true
@@ -52,39 +51,4 @@ public class Main {
 
         return passport.entrySet().stream().allMatch((e) -> validators.get(e.getKey()).test(e.getValue()));
     }
-
-    static boolean validateYear(String s, int lower, int upper) {
-        boolean b = false;
-
-        if (s.matches("\\d{4}")) {
-            var y = Integer.parseInt(s);
-
-            b = lower <= y && y <= upper;
-        }
-
-        return b;
-    }
-
-    static boolean validateHgt(String s) {
-        boolean b = false;
-
-        var pattern = Pattern.compile("(\\d+)(cm|in)");
-        var matcher = pattern.matcher(s);
-
-        if (matcher.matches()) {
-            var h = Integer.parseInt(matcher.group(1));
-
-            b = switch (matcher.group(2)) {
-                case "cm" ->
-                    150 <= h && h <= 193;
-                case "in" ->
-                    59 <= h && h <= 76;
-                default ->
-                    false;
-            };
-        }
-
-        return b;
-    }
-
 }
