@@ -12,11 +12,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         var input = Files.readString(Paths.get("6.in"));
-        
+
         var part1 = Arrays.stream(input.split("\n\n"))
                 .map(s -> s.replace("\n", ""))
                 .map(s -> s.split(""))
-                .mapToLong(s -> Arrays.stream(s).distinct().count()).sum();
+                .mapToLong(arr -> Arrays.stream(arr).distinct().count())
+                .sum();
 
         System.out.println("Part 1: " + part1);
 
@@ -28,7 +29,8 @@ public class Main {
                     return answers.entrySet().stream()
                             .filter(e -> !"\n".equals(e.getKey()) && groupSize == e.getValue())
                             .count();
-                }).sum();
+                })
+                .sum();
 
         System.out.println("Part 2: " + part2);
     }
