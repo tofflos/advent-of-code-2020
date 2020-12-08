@@ -3,7 +3,6 @@ package com.adventofcode2020;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -36,21 +35,13 @@ public class Main {
 
 record Bag(String color, List<Policy> policies) {
 
-    static Pattern pattern = Pattern.compile("(?<color>(\\w+)\\s(\\w+))(.+)bags contain\\s(?<children>(no other bags.)|(\\d+\\s\\w+\\s\\w+)(.+))+");
+    static Pattern pattern = Pattern.compile("^(\\w+ \\w+) bags contain (.*)$");
 
     static Bag fromString(String s) {
         var matcher = pattern.matcher(s);
 
         if (matcher.matches()) {
-            var color = matcher.group("color");
-            var children = matcher.group("children").replace("bags", "").replace("bag", "").replace(".", "").replace("no other", "").trim().split(", ");
-            var policies = Arrays.stream(children)
-                    .filter(l -> !l.isBlank())
-                    .map(l -> {
-                        return new Policy(Integer.parseInt(l, 0, 1, 10), l.substring(2).trim());
-                    }).collect(Collectors.toList());
-
-            return new Bag(color, policies);
+            return new Bag(matcher.group(1), Policy.fromString(matcher.group(2)));
         }
 
         throw new IllegalArgumentException("Unable to parse: " + s);
@@ -59,4 +50,11 @@ record Bag(String color, List<Policy> policies) {
 
 record Policy(int quantity, String color) {
 
+    static Pattern pattern = Pattern.compile("(?>(\\d) (\\w+ \\w+))");
+
+    static List<Policy> fromString(String s) {
+        return pattern.matcher(s).results()
+                .map(r -> new Policy(Integer.parseInt(r.group(1)), r.group(2)))
+                .collect(Collectors.toList());
+    }
 }
