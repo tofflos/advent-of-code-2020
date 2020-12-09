@@ -49,7 +49,7 @@ public class Main {
         for (var number : numbers) {
             window.add(number);
 
-            var sum = window.stream().mapToLong(Long::valueOf).sum();
+            var sum = window.stream().mapToLong(Long::longValue).sum();
 
             while (sum > weakness) {
                 window.poll();
