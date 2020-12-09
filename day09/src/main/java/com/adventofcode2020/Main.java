@@ -25,21 +25,19 @@ public class Main {
     }
 
     static long part1(List<Long> numbers, int size) {
-        var queue = new ArrayDeque<Long>(numbers.subList(size, numbers.size()));
         var window = new ArrayDeque<Long>(numbers.subList(0, size));
 
-        while(!queue.isEmpty()) {
-            var q = queue.pop();
+        for(var number : numbers.subList(size, numbers.size())) {
             
             if(window.stream()
-                    .flatMap(w1 -> window.stream()
-                            .map(w2 -> w1 + w2))
-                    .noneMatch(q::equals)) {
-                return q;
+                    .flatMap(n1 -> window.stream()
+                            .map(n2 -> n1 + n2))
+                    .noneMatch(number::equals)) {
+                return number;
             }
             
             window.pop();
-            window.add(q);
+            window.add(number);
         }
 
         throw new IllegalArgumentException();
