@@ -18,7 +18,7 @@ public class Main {
         var size = 25;
 
         var weakness1 = part1(numbers, size);
-        var weakness2 = part2(numbers, size, weakness1);
+        var weakness2 = part2(numbers, weakness1);
 
         System.out.println("Part 1: " + weakness1);
         System.out.println("Part 2: " + weakness2);
@@ -43,7 +43,7 @@ public class Main {
         throw new IllegalArgumentException();
     }
 
-    static long part2(List<Long> numbers, int premable, long weakness) {
+    static long part2(List<Long> numbers, long weakness) {
         var window = new ArrayDeque<Long>();
 
         for (var number : numbers) {
