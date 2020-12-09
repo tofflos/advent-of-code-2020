@@ -46,21 +46,21 @@ public class Main {
     }
 
     static long part2(List<Long> numbers, int premable, long weakness) {
-        var queue = new ArrayDeque<Long>();
+        var window = new ArrayDeque<Long>();
 
         for (var number : numbers) {
-            queue.add(number);
+            window.add(number);
 
-            var sum = queue.stream().mapToLong(Long::valueOf).sum();
+            var sum = window.stream().mapToLong(Long::valueOf).sum();
 
             while (sum > weakness) {
-                queue.poll();
-                sum = queue.stream().mapToLong(Long::longValue).sum();
+                window.poll();
+                sum = window.stream().mapToLong(Long::longValue).sum();
             }
 
             if (sum == weakness) {
-                var min = queue.stream().mapToLong(Long::longValue).min().orElseThrow();
-                var max = queue.stream().mapToLong(Long::longValue).max().orElseThrow();
+                var min = window.stream().mapToLong(Long::longValue).min().orElseThrow();
+                var max = window.stream().mapToLong(Long::longValue).max().orElseThrow();
                 return min + max;
             }
         }
