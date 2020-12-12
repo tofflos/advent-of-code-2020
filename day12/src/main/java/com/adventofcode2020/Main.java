@@ -29,7 +29,7 @@ class Ship {
     int y = 0;
     int x = 0;
     
-    int d = 90;
+    int d = 0;
 
     void navigate(String instuction) {
         var action = instuction.charAt(0);
@@ -42,10 +42,10 @@ class Ship {
             case 'W' -> x -= value;
             case 'F' -> {
                 switch (d) {
-                    case 0 -> y += value;
-                    case 90 -> x += value;
-                    case 180 -> y -= value;
-                    case 270 -> x -= value;
+                    case 0 -> x += value;
+                    case 90 -> y += value;
+                    case 180 -> x -= value;
+                    case 270 -> y -= value;
                 }
             }
             case 'R' -> d = Math.floorMod(d + value, 360);
