@@ -9,23 +9,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        var current = Files.lines(Paths.get("11.in"))
+        var seats = Files.lines(Paths.get("11.in"))
                 .map(String::toCharArray)
                 .toArray(char[][]::new);
 
-        System.out.println("Part 1: " + occupied(current, Main::adjacent, 4));
-        System.out.println("Part 2: " + occupied(current, Main::visible, 5));
-    }
-
-    static String render(char[][] seats) {
-        var lines = new StringBuilder();
-
-        for (var row : seats) {
-            lines.append(String.valueOf(row));
-            lines.append("\n");
-        }
-
-        return lines.toString();
+        System.out.println("Part 1: " + occupied(seats, Main::adjacent, 4));
+        System.out.println("Part 2: " + occupied(seats, Main::visible, 5));
     }
 
     static String adjacent(char[][] seats, int px, int py, int dx, int dy) {
@@ -51,7 +40,7 @@ public class Main {
             y += dy;
             x += dx;
 
-            if (y < 0 || y >= seats.length || x < 0 || x >= seats.length) {
+            if (y < 0 || y >= seats.length || x < 0 || x >= seats[y].length) {
                 break;
             }
 
@@ -96,11 +85,14 @@ public class Main {
             if (Arrays.deepEquals(current, next)) {
                 break;
             }
-
+            
             current = next;
         }
-
-        return render(current).chars().filter(c -> c == '#').count();
+        
+        return Arrays.stream(current)
+                .flatMapToInt(arr -> String.valueOf(arr).chars())
+                .filter(c -> c == '#')
+                .count();
     }
 }
 
