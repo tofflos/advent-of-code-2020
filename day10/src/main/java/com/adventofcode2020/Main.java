@@ -34,7 +34,48 @@ public class Main {
         var frequencies = Arrays.stream(differences)
                 .boxed()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-
+        
         System.out.println("Part 1: " + frequencies.get(1) * frequencies.get(3));
+        System.out.println("Part 2: " + multipliers(adapters).stream().mapToLong(i -> (long) i).reduce(1, Math::multiplyExact));
+    }
+
+    static List<Integer> multipliers(int[] adapters) {
+        var children = children(adapters);
+        var multipliers = new ArrayList<Integer>();
+        var sb = new StringBuilder();
+
+        for (int i = 0; i < children.length; i++) {
+            int c = children[i];
+
+            if (c != 1) {
+                sb.append(c);
+            } else if (!sb.isEmpty()) {
+                multipliers.add(
+                    switch (sb.toString()) {
+                            case "332" -> 7;
+                            case "32" -> 4;
+                            case "2" -> 2;
+                            default -> throw new IllegalArgumentException("Unknown pattern: " + sb);
+                });
+
+                sb.setLength(0);
+            }
+        }
+
+        return multipliers;
+    }
+
+    static int[] children(int[] adapters) {
+        var children = new int[adapters.length];
+
+        for (int i = 0; i < children.length; i++) {
+            for (int j = i + 1; j < adapters.length && j < i + 4; j++) {
+                if (adapters[j] - adapters[i] < 4) {
+                    children[i]++;
+                }
+            }
+        }
+
+        return children;
     }
 }
