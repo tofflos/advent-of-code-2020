@@ -31,9 +31,9 @@ class Ship {
     
     int d = 0;
 
-    void navigate(String instuction) {
-        var action = instuction.charAt(0);
-        var value = Integer.parseInt(instuction.substring(1));
+    void navigate(String instruction) {
+        var action = instruction.charAt(0);
+        var value = Integer.parseInt(instruction.substring(1));
 
         switch (action) {
             case 'N' -> y += value;
