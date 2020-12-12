@@ -28,6 +28,7 @@ class Ship {
 
     int y = 0;
     int x = 0;
+    
     int d = 90;
 
     void navigate(String instuction) {
@@ -35,14 +36,10 @@ class Ship {
         var value = Integer.parseInt(instuction.substring(1));
 
         switch (action) {
-            case 'N' ->
-                y += value;
-            case 'S' ->
-                y -= value;
-            case 'E' ->
-                x += value;
-            case 'W' ->
-                x -= value;
+            case 'N' -> y += value;
+            case 'S' -> y -= value;
+            case 'E' -> x += value;
+            case 'W' -> x -= value;
             case 'F' -> {
                 switch (d) {
                     case 0 -> y += value;
