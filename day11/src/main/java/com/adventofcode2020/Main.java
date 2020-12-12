@@ -18,16 +18,10 @@ public class Main {
     }
 
     static String adjacent(char[][] seats, int px, int py, int dx, int dy) {
-        var sb = new StringBuilder();
-
         var x = px + dx;
         var y = py + dy;
 
-        if (0 <= y && y < seats.length && 0 <= x && x < seats[y].length) {
-            sb.append(seats[y][x]);
-        }
-
-        return sb.toString();
+        return 0 <= y && y < seats.length && 0 <= x && x < seats[y].length ? String.valueOf(seats[y][x]) : "";
     }
 
     static String visible(char[][] seats, int px, int py, int dx, int dy) {
