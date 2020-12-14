@@ -16,8 +16,8 @@ public class Main {
         var mask2 = 0L;
         var memory = new HashMap<String, Long>();
 
-        for (var i = 0; i < input.size(); i++) {
-            var t = input.get(i).split(" = ");
+        for (var line : input) {
+            var t = line.split(" = ");
 
             if (t[0].startsWith("mask")) {
                 mask1 = Long.parseLong(t[1].replace("X", "0"), 2);
@@ -31,8 +31,8 @@ public class Main {
 
         memory.clear();
 
-        for (var i = 0; i < input.size(); i++) {
-            var t = input.get(i).split(" = ");
+        for (var line : input) {
+            var t = line.split(" = ");
 
             if (t[0].startsWith("mask")) {
                 mask1 = Long.parseLong(t[1].replace("X", "0"), 2);
@@ -43,8 +43,8 @@ public class Main {
                 var bs = BitSet.valueOf(new long[]{address});
                 permutations(bits.length, counters -> {
 
-                    for (int j = 0; j < counters.length; j++) {
-                        bs.set(bits[j], counters[j] == 1);
+                    for (int i = 0; i < counters.length; i++) {
+                        bs.set(bits[i], counters[i] == 1);
                     }
 
                     memory.put(Long.toString(bs.toLongArray()[0]), (Long.parseLong(t[1])));
@@ -71,7 +71,6 @@ public class Main {
             } else {
                 consumer.accept(counters);
             }
-
         }
     }
 }
