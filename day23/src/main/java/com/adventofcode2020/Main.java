@@ -20,9 +20,9 @@ public class Main {
                 })
                 .collect(Collectors.toList());
 
-        var one = game(cups, 100).next;
+        var one = game(cups, 100);
         
-        System.out.println("Part 1: " + render(one));
+        System.out.println("Part 1: " + render(one.next));
 
         cups = Arrays.stream(Files.readString(Paths.get("23.in")).split(""))
                 .map(Integer::parseInt)
@@ -103,7 +103,7 @@ public class Main {
         var t = cup;
 
         for (int j = 0; j < 8; j++) {
-            sb.append(t);
+            sb.append(t.label);
             t = t.next;
         }
 
