@@ -35,7 +35,8 @@ public class Main {
     static boolean extendedValidation(String message, Set<String> materializations42, Set<String> materializations31) {
         // Materialization42 and materalization31 contain strings that are 8 characters long and have no elements in common.
         // The sequence of binary numbers, when strings are interpreted as a=0 and b=1, does not match anything at https://oeis.org.
-        // Shape of message must match the pattern 42x + 42y + 31y
+        // Shape of message must match the pattern 42x + 42y + 31y where y > 1 and x > y
+        
 
         var length = materializations31.stream().findAny().orElseThrow().length();
         var count31 = 0;
@@ -52,7 +53,7 @@ public class Main {
             t = t.substring(length);
         }
 
-        return count31 > 0 && count42 > count31 && count42 * length + count31 * length == message.length();
+        return count31 > 0 && count42 > count31 && t.isEmpty();
     }
 
     static HashMap<Integer, Set<String>> materialize(Map<Integer, String> rules) {
